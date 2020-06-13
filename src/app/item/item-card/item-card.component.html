@@ -1,1 +1,8 @@
-<h1> hello world </h1>
+<div class="greyCard" *ngFor="let item of items">
+  <h3> {{item.title}} </h3>
+  <b>Price:</b> ${{item.price}}
+  <br>
+  <i>{{item.location}}</i>
+  <button (click)="onShowDetails()">Show Details</button>
+</div>
+
