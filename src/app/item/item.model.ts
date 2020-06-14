@@ -1,4 +1,4 @@
-interface Item {
+export interface Item {
   title: string,
   condition: string,
   category: string,

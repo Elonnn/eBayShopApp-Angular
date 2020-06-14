@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Item } from '../item.model'
 
 @Component({
   selector: 'app-item-card',

@@ -1,8 +1,41 @@
 .greyCard {
   margin: auto;
   margin-top: 8px;
+  padding: 3%;
 
-  width: 80%;
+  width: 70%;
 
   background-color: rgb(202, 207, 202);
+
+  display: grid;
+  grid-template-columns: auto 90%;
+}
+
+.greyCard h3 {
+  color: rgb(63, 128, 202);
+}
+
+
+.itemCard .image {
+  max-height: 140px;
+  margin: 3%;
+
+  order: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.itemCard .text {
+  position: relative;
+  display: inline-block;
+
+  text-align: left;
+  margin: 40px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  order: 2;
+  align-self: center;
 }

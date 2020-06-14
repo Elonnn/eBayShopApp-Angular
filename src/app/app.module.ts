@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ItemCardComponent } from './item/item-card/item-card.compenent';
+// import { MatPaginatorModule} from '@angular/material';
+// import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
