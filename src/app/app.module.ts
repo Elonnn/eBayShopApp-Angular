@@ -6,20 +6,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ItemCardComponent } from './item/item-card/item-card.compenent';
-// import { MatPaginatorModule} from '@angular/material';
-// import { from } from 'rxjs';
+
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ItemCardComponent
-  ],
+  declarations: [AppComponent, ItemCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

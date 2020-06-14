@@ -1,4 +1,6 @@
-<div class="greyCard" *ngFor="let item of items">
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<div class="greyCard" *ngFor="let item of items | paginate: { itemsPerPage: 3, currentPage: p }">
   <img src="{{item.imageURL}}">
   <div class="text">
     <h3> {{item.title}} </h3>
@@ -8,4 +10,3 @@
     <button (click)="onShowDetails()">Show Details</button>
   </div>
 </div>
-
