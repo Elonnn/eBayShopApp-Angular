@@ -1,4 +1,5 @@
 
+
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 <div class="greyCard" *ngFor="let item of items | paginate: { itemsPerPage: 3, currentPage: p }">
   <img src="{{item.imageURL}}">

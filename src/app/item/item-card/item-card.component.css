@@ -1,3 +1,5 @@
+
+
 .greyCard {
   margin: auto;
   margin-top: 8px;
@@ -16,7 +18,7 @@
 }
 
 
-.itemCard .image {
+.greyCard .image {
   max-height: 140px;
   margin: 3%;
 
@@ -25,7 +27,7 @@
   justify-self: center;
 }
 
-.itemCard .text {
+.greyCard .text {
   position: relative;
   display: inline-block;
 
@@ -39,3 +41,4 @@
   order: 2;
   align-self: center;
 }
+
