@@ -10,16 +10,18 @@ import { InputFormComponent } from './input-form/input-form.component';
 
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
   declarations: [AppComponent, ItemCardComponent, InputFormComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
+    FormsModule,
+    NgxPaginationModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
