@@ -1,6 +1,6 @@
 <form (submit)="onSubmit(searchForm)" (reset)="onReset()" #searchForm="ngForm">
   <div class="form-group row">
-    <label for="keywords" class="col-form-label col-sm-2 ">
+    <label for="keywords" class="col-form-label col-sm-2">
       Key words<span class="redAsteroid">*</span>
     </label>
     <div class="col-sm-10">
@@ -18,7 +18,7 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-form-label col-sm-2 ">
+    <div class="col-form-label col-sm-2">
       Price range
     </div>
     <div class="col">
@@ -44,35 +44,35 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-2 col-form-label">Condition </div>
+    <div class="col-sm-2 col-form-label">Condition</div>
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="1000" />
+          <input type="checkbox" name="condition" value="1000" ngModel />
           New
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="3000" />
+          <input type="checkbox" name="condition[]" value="3000" ngModel />
           Used
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="4000" />
+          <input type="checkbox" name="condition[]" value="4000" ngModel />
           Very Good
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="5000" />
+          <input type="checkbox" name="condition[]" value="5000" ngModel />
           Good
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="6000" />
+          <input type="checkbox" name="condition[]" value="6000" ngModel />
           Acceptable
         </label>
       </div>
@@ -80,7 +80,7 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-2 col-form-label">Seller </div>
+    <div class="col-sm-2 col-form-label">Seller</div>
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
@@ -92,7 +92,7 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-2 col-form-label">Shipping </div>
+    <div class="col-sm-2 col-form-label">Shipping</div>
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
@@ -110,7 +110,7 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-2 col-form-label">Sort order </div>
+    <div class="col-sm-2 col-form-label">Sort order</div>
     <div class="col-sm-10">
       <select class="custom-select" size="1" name="inSortBy" id="selectSortBy">
         <option selected="selected" value="BestMatch">Best Match</option>
@@ -118,29 +118,29 @@
         <option value="PricePlusShippingHighest"
           >PricePlusShippingHighest</option
         >
-        <option value="PricePlusShippingLowest"
-          >PricePlusShippingLowest</option
-        >
+        <option value="PricePlusShippingLowest">PricePlusShippingLowest</option>
       </select>
     </div>
   </div>
 
-  <button type="reset" class="btn btn-secondary">Clear</button>
-  <button type="submit" class="btn btn-primary">Search</button>
+  <div class="row justify-content-end mt-0 mb-5">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="reset" class="btn btn-secondary">Clear</button>
+  </div>
+
+  <div
+    class="alert alert-warning text-center text-dark"
+    role="alert"
+    *ngIf="keywords.invalid && submitted"
+  >
+    Please enter a keyword
+  </div>
+
+  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="!priceRangeValid">
+    Please use appropriate values for minPrice/maxPrice
+  </div>
+
+  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="submitted">
+    No exact matches found
+  </div>
 </form>
-
-<div
-  class="alert alert-warning"
-  role="alert"
-  *ngIf="keywords.invalid && submitted"
->
-  Please enter a keyword
-</div>
-
-<div class="alert alert-warning" role="alert" *ngIf="!priceRangeValid">
-  Please use appropriate values for minPrice/maxPrice
-</div>
-
-<div class="alert alert-warning" role="alert" *ngIf="submitted">
-  No exact matches found
-</div>

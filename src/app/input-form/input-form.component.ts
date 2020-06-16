@@ -17,9 +17,9 @@ export class InputFormComponent implements OnInit {
 
   onSubmit(form: NgForm): void {
     this.submitted = true;
+    if (form.invalid) return;
     let upperPriceLimit = parseFloat(form.value.upperPriceLimit);
     let lowerPriceLimit = parseFloat(form.value.lowerPriceLimit);
-    // console.dir(upperPriceLimit)
     if (
       (!isNaN(lowerPriceLimit)) && lowerPriceLimit < 0 ||
       (!isNaN(upperPriceLimit)) && upperPriceLimit < 0 ||
@@ -30,6 +30,8 @@ export class InputFormComponent implements OnInit {
     } else {
       this.priceRangeValid = true;
     }
+    console.dir(form.value.condition)
+
   }
 
   onReset(): void {
