@@ -1,7 +1,8 @@
 
 #eBayHome {
-  width: 30%;
+  width: 100%;
+  max-width: 500px;
   margin: auto;
+  margin-top: 1rem;
   display: block;
-  align-content: center;
 }
