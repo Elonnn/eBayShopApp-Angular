@@ -1,13 +1,19 @@
-
-
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
-<div class="greyCard" *ngFor="let item of items | paginate: { itemsPerPage: 3, currentPage: p }">
-  <img src="{{item.imageURL}}">
-  <div class="text">
-    <h3> {{item.title}} </h3>
-    <b>Price:</b> ${{item.price}}
-    <br>
-    <i>{{item.location}}</i>
-    <button (click)="onShowDetails()">Show Details</button>
+<div *ngIf="displayedItems.length > 0">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <div
+    class="greyCard"
+    *ngFor="
+      let item of displayedItems
+        | paginate: { itemsPerPage: 10, currentPage: p }
+    "
+  >
+    <img src="{{ item.imageURL }}" />
+    <div class="text">
+      <h3>{{ item.title }}</h3>
+      <b>Price:</b> ${{ item.price }}
+      <br />
+      <i>{{ item.location }}</i>
+      <button (click)="onShowDetails()">Show Details</button>
+    </div>
   </div>
 </div>

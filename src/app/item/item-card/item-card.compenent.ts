@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Item } from '../item.model';
 
 @Component({
@@ -8,15 +8,7 @@ import { Item } from '../item.model';
 })
 export class ItemCardComponent {
   p: number = 1;
-  items: Item[];
-
-  getItems() {
-    this.items = [];
-  }
-
-  ngOnInit() {
-    this.getItems();
-  }
+  @Input() displayedItems: Item[] = [];
 
   onShowDetails() {
     alert('details!');

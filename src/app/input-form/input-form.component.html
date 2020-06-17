@@ -11,7 +11,7 @@
         id="keywords"
         placeholder="Enter keywords"
         required
-        ngModel
+        [(ngModel)]="searchFilters.keywords"
         #keywords="ngModel"
       />
     </div>
@@ -25,20 +25,20 @@
       <input
         type="number"
         class="form-control"
-        name="lowerPriceLimit"
+        name="MinPrice"
         placeholder="Min price"
         min="0"
-        ngModel
+        [(ngModel)]="searchFilters.MinPrice"
       />
     </div>
     <div class="col">
       <input
         type="number"
         class="form-control"
-        name="upperPriceLimit"
+        name="MaxPrice"
         placeholder="Max price"
         min="0"
-        ngModel
+        [(ngModel)]="searchFilters.MaxPrice"
       />
     </div>
   </div>
@@ -85,7 +85,7 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="returnAccepted" ngModel />
+          <input type="checkbox" name="ReturnsAcceptedOnly" [(ngModel)]="searchFilters.ReturnsAcceptedOnly" />
           Return Accepted
         </label>
       </div>
@@ -97,13 +97,13 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="shippingFree" ngModel />
+          <input type="checkbox" name="FreeShippingOnly" [(ngModel)]="searchFilters.FreeShippingOnly" />
           Free
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="shippingExpedited" ngModel />
+          <input type="checkbox" name="shippingExpedited" [(ngModel)]="searchFilters.shippingExpedited" />
           Expedited
         </label>
       </div>
@@ -113,7 +113,7 @@
   <div class="form-group row">
     <div class="col-sm-2 col-form-label">Sort order</div>
     <div class="col-sm-10">
-      <select class="custom-select" size="1" name="inSortBy" id="selectSortBy" [(ngModel)]="selectedValue" >
+      <select class="custom-select" size="1" name="sortOrder" id="selectSortBy" [(ngModel)]="searchFilters.sortOrder" >
         <option selected="selected" value="BestMatch">Best Match</option>
         <option value="CurrentPriceHighest">CurrentPriceHighest</option>
         <option value="PricePlusShippingHighest"
@@ -141,7 +141,7 @@
     Please use appropriate values for minPrice/maxPrice
   </div>
 
-  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="submitted">
+  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="noMatch">
     No exact matches found
   </div>
 </form>

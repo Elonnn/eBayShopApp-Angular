@@ -1,5 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 
 const app = express();
 
@@ -19,14 +21,132 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/search/:searchParams', (req, res, next) => {
-  console.log(req.params.searchParams)
-  const items = [{"title": "Gundam Bandai Hobby HG G-Reco 1/144 Elf Bullock (Mask Custom) Model Kit Japan", "condition": "New", "category": "Gundam", "itemURL": "https://www.ebay.com/itm/Gundam-Bandai-Hobby-HG-G-Reco-1-144-Elf-Bullock-Mask-Custom-Model-Kit-Japan-/402249709432", "price": "40.0", "shippingPrice": "264.0", "location": "Japan", "isReturnAccepted": true, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs1.ebaystatic.com/m/m--5jOP-SjFdDVcv5VqISdQ/140.jpg"}, {"title": "clear polycarbonate sheet .040\u201d x 52\u201d x 105\u201d with Thermoformable Masking 2 sides", "condition": "New", "category": "Plastic Sheets", "itemURL": "https://www.ebay.com/itm/clear-polycarbonate-sheet-040-x-52-x-105-Thermoformable-Masking-2-sides-/324137827720", "price": "48.0", "shippingPrice": "175.0", "location": "Enon,OH,USA", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs1.ebaystatic.com/m/mhVk27fjTE87rjSjCcudtHg/140.jpg"}, {"title": "NEW 2019 STAR WARS HAPPY MEAL TOY LOT of 11 MASKS C3PO CHEWBACCA MCDONALDS POTF", "condition": "New", "category": "Other Star Wars Collectibles", "itemURL": "https://www.ebay.com/itm/NEW-2019-STAR-WARS-HAPPY-MEAL-TOY-LOT-11-MASKS-C3PO-CHEWBACCA-MCDONALDS-POTF-/293511217784", "price": "34.99", "shippingPrice": "115.0", "location": "Maricopa,AZ,USA", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs1.ebaystatic.com/m/mYpDUpg7QVXzeQg6bS_rp1g/140.jpg"}, {"title": "Lululun Face Mask Extra Moist Brightening Whitening Aging Care 7-32-36 sheets", "condition": "New", "category": "Masks & Peels", "itemURL": "https://www.ebay.com/itm/Lululun-Face-Mask-Extra-Moist-Brightening-Whitening-Aging-Care-7-32-36-sheets-/291674492293?var=592358427193", "price": "35.99", "shippingPrice": "100.0", "location": "Japan", "isReturnAccepted": true, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs2.ebaystatic.com/pict/2916744922934040_3.jpg"}, {"title": "Black Panther, Vibranium Power FX Claw, Hasbro NEW & SEALED W/Light Up Mask 2017", "condition": "New", "category": "Comic Book Heroes", "itemURL": "https://www.ebay.com/itm/Black-Panther-Vibranium-Power-FX-Claw-Hasbro-NEW-SEALED-W-Light-Up-Mask-2017-/254415607239", "price": "50.0", "shippingPrice": "50.0", "location": "San Leandro,CA,USA", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs4.ebaystatic.com/m/mAZ-U_toaB_uK-m3jkX3YaA/140.jpg"}, {"title": "Mask Pentagon lenteguela oro Wrestling Lucha libre Mexicana Luchador.", "condition": "New", "category": "Wrestling", "itemURL": "https://www.ebay.com/itm/Mask-Pentagon-lenteguela-oro-Wrestling-Lucha-libre-Mexicana-Luchador-/164148033083", "price": "33.99", "shippingPrice": "65.0", "location": "Mexico", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs4.ebaystatic.com/m/ml6uWwLTKfWX_u_TqhXJuBw/140.jpg"}, {"title": "LebeL IAU SERUM Mask Hair Treatment 170g Made in Japan", "condition": "New", "category": "Shampoos & Conditioners", "itemURL": "https://www.ebay.com/itm/LebeL-IAU-SERUM-Mask-Hair-Treatment-170g-Made-Japan-/153680718240", "price": "39.99", "shippingPrice": "50.0", "location": "Japan", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs1.ebaystatic.com/m/mT9wMOSKHibzWICiWFSWYAA/140.jpg"}, {"title": "3\u00a0Unused\u00a0Authentic Handcrafted African Masks from\u00a0Senegal for Wall Decoration", "condition": "New", "category": "Masks", "itemURL": "https://www.ebay.com/itm/3-Unused-Authentic-Handcrafted-African-Masks-from-Senegal-Wall-Decoration-/112734286116", "price": "49.0", "shippingPrice": "35.0", "location": "New York,NY,USA", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs1.ebaystatic.com/m/mAeIb5WZEqAsoNWbRhXfw2g/140.jpg"}, {"title": "Mobile Suit Gundam UC (Unicorn) This mask is for that. T-shirt Black Size: M", "condition": "New", "category": "DragonBall Z", "itemURL": "https://www.ebay.com/itm/Mobile-Suit-Gundam-UC-Unicorn-mask-that-T-shirt-Black-Size-M-/174151311425", "price": "46.42", "shippingPrice": "35.0", "location": "Japan", "isReturnAccepted": true, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs2.ebaystatic.com/m/mKNqDWa9inbvj8ksH9deEFA/140.jpg"}, {"title": "Removable Cover Transparent Sun Cap Mask Block Vinyl Protective / made in korea ", "condition": "New with tags", "category": "Hats & Headwear", "itemURL": "https://www.ebay.com/itm/Removable-Cover-Transparent-Sun-Cap-Mask-Block-Vinyl-Protective-made-korea-/124098873005", "price": "34.65", "shippingPrice": "45.0", "location": "Korea, South", "isReturnAccepted": false, "isTopRated": false, "isExpedited": true, "imageURL": "https://thumbs2.ebaystatic.com/m/mX1DCt6jPV0JVcEndo6rT5A/140.jpg"}];
-  res.status(200).json({
-    message: 'dummy',
-    items: items
-  });
+app.get("/api/search/:searchParams", (req, res, next) => {
+  let searchParams = JSON.parse(req.params.searchParams);
+  console.log(searchParams);
 
+  axios
+    .get(constructURL(searchParams))
+    .then((response) => {
+      res.status(200).json({ items: extractNeededInfo(response.data) });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500);
+    });
 });
+
+function extractNeededInfo(rawData) {
+  if (
+    rawData.findItemsAdvancedResponse === undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput === undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries ===
+      undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries[0] ===
+      "0"
+  ) {
+    console.dir(rawData);
+    console.log("No matches found!");
+    return [];
+  }
+  let items =
+    rawData["findItemsAdvancedResponse"][0]["searchResult"][0]["item"];
+  let res = [];
+  for (var item of items) {
+    try {
+      var title = item["title"][0];
+      var condition = item["condition"][0]["conditionDisplayName"][0];
+      var category = item["primaryCategory"][0]["categoryName"][0];
+      var itemURL = item["viewItemURL"][0];
+      var price =
+        item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
+      var shippingPrice =
+        item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"];
+      var location = item["location"][0];
+      var isReturnAccepted = item["returnsAccepted"][0] === "true";
+      var isTopRated = item["topRatedListing"][0] === "true";
+      var isExpedited =
+        item["shippingInfo"][0]["expeditedShipping"][0] === "true";
+      var imageURL = item["galleryURL"][0];
+    } catch (error) {
+      // console.dir(item)
+      // console.dir(error)
+      continue;
+    }
+    res.push({
+      title: title,
+      condition: condition,
+      category: category,
+      itemURL: itemURL,
+      price: price,
+      shippingPrice: shippingPrice,
+      location: location,
+      isReturnAccepted: isReturnAccepted,
+      isTopRated: isTopRated,
+      isExpedited: isExpedited,
+      imageURL: imageURL,
+    });
+  }
+  return res;
+}
+
+function constructURL(searchParams) {
+  let url = `https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=YilangXu-CSCI571h-PRD-b2eb84a53-40467988&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=100`;
+  let eBayParams = {
+    keywords: searchParams["keywords"],
+    sortOrder: searchParams["sortOrder"],
+  };
+
+  let filterNum = 0;
+  if (searchParams["MinPrice"] !== null) {
+    eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MinPrice";
+    eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+      searchParams["MinPrice"];
+    eBayParams["itemFilter(" + filterNum.toString() + ").paramName"] =
+      "Currency";
+    eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
+    filterNum += 1;
+  }
+  if (searchParams["MaxPrice"] !== null) {
+    eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MaxPrice";
+    eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+      searchParams["MaxPrice"];
+    eBayParams["itemFilter(" + filterNum.toString() + ").paramName"] =
+      "Currency";
+    eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
+    filterNum += 1;
+  }
+  eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
+    "ReturnsAcceptedOnly";
+  eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+    searchParams["ReturnsAcceptedOnly"];
+  filterNum += 1;
+  eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
+    "FreeShippingOnly";
+  eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+    searchParams["FreeShippingOnly"];
+  filterNum += 1;
+  if (searchParams["shippingExpedited"]) {
+    eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
+      "ExpeditedShippingType";
+    eBayParams["itemFilter(" + filterNum.toString() + ").value"] = "Expedited";
+    filterNum += 1;
+  }
+  let condition = searchParams["condition"];
+  if (condition.length > 0) {
+    eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "Condition";
+    for (var i = 0; i < condition.length; i++) {
+      v = condition[i];
+      eBayParams[
+        "itemFilter(" + filterNum.toString() + ").value(" + i.toString() + ")"
+      ] = v;
+    }
+    filterNum += 1;
+  }
+  const paramString = new URLSearchParams(eBayParams).toString();
+  url += "&" + paramString;
+  console.log(url);
+  return url;
+}
 
 module.exports = app;

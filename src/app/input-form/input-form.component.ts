@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +13,21 @@ import { Item } from '../item/item.model';
 export class InputFormComponent implements OnInit {
   submitted: boolean;
   priceRangeValid: boolean;
-  selectedValue: string;
-  items: Item[];
+  noMatch: boolean;
+  fetchedItems: Item[] = [];
+  searchFilters = {
+    "keywords": null,
+    "sortOrder": null,
+    "MinPrice": null,
+    "MaxPrice": null,
+
+    "ReturnsAcceptedOnly": false,
+    "FreeShippingOnly": false,
+    "shippingExpedited": false,
+    "condition": [],
+  }
+  @Output() dataFetched = new EventEmitter<Item[]>();
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -24,12 +37,13 @@ export class InputFormComponent implements OnInit {
   onSubmit(form: NgForm): void {
     this.submitted = true;
     if (form.invalid) return;
-    let upperPriceLimit = parseFloat(form.value.upperPriceLimit);
-    let lowerPriceLimit = parseFloat(form.value.lowerPriceLimit);
+
+    let MaxPrice = parseFloat(form.value.MaxPrice);
+    let MinPrice = parseFloat(form.value.MinPrice);
     if (
-      (!isNaN(lowerPriceLimit)) && lowerPriceLimit < 0 ||
-      (!isNaN(upperPriceLimit)) && upperPriceLimit < 0 ||
-      (!isNaN(upperPriceLimit)) && (!isNaN(lowerPriceLimit)) && lowerPriceLimit > upperPriceLimit
+      (!isNaN(MinPrice)) && MinPrice < 0 ||
+      (!isNaN(MaxPrice)) && MaxPrice < 0 ||
+      (!isNaN(MaxPrice)) && (!isNaN(MinPrice)) && MinPrice > MaxPrice
     ) {
       this.priceRangeValid = false;
       return;
@@ -43,28 +57,36 @@ export class InputFormComponent implements OnInit {
     if (form.value.condition4000) condition.push('4000');
     if (form.value.condition5000) condition.push('5000');
     if (form.value.condition6000) condition.push('6000');
+    this.searchFilters["condition"] = condition;
 
-    let searchFilters = {
-      "keywords": form.value.keywords,
-      "sortOrder": this.selectedValue,
-      "MinPrice": lowerPriceLimit,
-      "MaxPrice": upperPriceLimit,
-
-      "ReturnsAcceptedOnly": form.value.returnAccepted,
-      "FreeShippingOnly": form.value.shippingFree,
-      "shippingExpedited": form.value.shippingExpedited,
-      "condition": condition,
-    }
-
-    let params = JSON.stringify(searchFilters);
-    this.http.get<{message: string, items: Item[]}>('http://localhost:3000/api/search/' + params)
-    .subscribe((rawData) => {
-      this.items = rawData.items;
+    let params = JSON.stringify(this.searchFilters);
+    this.http.get<{items: Item[]}>('http://localhost:3000/api/search/' + params)
+    .subscribe((data) => {
+      if (data.items.length === 0){
+        this.noMatch = true;
+      }
+      this.fetchedItems = data.items;
+      // emit an event with data as parameters
+      this.dataFetched.emit(this.fetchedItems);
     });
   }
 
   onReset(): void {
     this.submitted = false;
     this.priceRangeValid = true;
+    this.noMatch = false;
+    this.fetchedItems = [];
+    this.dataFetched.emit(this.fetchedItems);
+    this.searchFilters = {
+    "keywords": null,
+    "sortOrder": null,
+    "MinPrice": null,
+    "MaxPrice": null,
+
+    "ReturnsAcceptedOnly": false,
+    "FreeShippingOnly": false,
+    "shippingExpedited": false,
+    "condition": [],
+  }
   }
 }

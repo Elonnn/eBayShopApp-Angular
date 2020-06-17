@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { Item } from './item/item.model';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shopApp';
+  items : Item[];
+  onDataFetched(items: Item[]) {
+    this.items = items;
+  }
 }
