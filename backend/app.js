@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
@@ -7,6 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/", express.static(path.join(__dirname, "angular")));  // permit index.html to get js files
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,59 +38,9 @@ app.get("/api/search/:searchParams", (req, res, next) => {
     });
 });
 
-function extractNeededInfo(rawData) {
-  if (
-    rawData.findItemsAdvancedResponse === undefined ||
-    rawData.findItemsAdvancedResponse[0].paginationOutput === undefined ||
-    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries ===
-      undefined ||
-    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries[0] ===
-      "0"
-  ) {
-    console.dir(rawData);
-    console.log("No matches found!");
-    return [];
-  }
-  let items =
-    rawData["findItemsAdvancedResponse"][0]["searchResult"][0]["item"];
-  let res = [];
-  for (var item of items) {
-    try {
-      var title = item["title"][0];
-      var condition = item["condition"][0]["conditionDisplayName"][0];
-      var category = item["primaryCategory"][0]["categoryName"][0];
-      var itemURL = item["viewItemURL"][0];
-      var price =
-        item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
-      var shippingPrice =
-        item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"];
-      var location = item["location"][0];
-      var isReturnAccepted = item["returnsAccepted"][0] === "true";
-      var isTopRated = item["topRatedListing"][0] === "true";
-      var isExpedited =
-        item["shippingInfo"][0]["expeditedShipping"][0] === "true";
-      var imageURL = item["galleryURL"][0];
-    } catch (error) {
-      // console.dir(item)
-      // console.dir(error)
-      continue;
-    }
-    res.push({
-      title: title,
-      condition: condition,
-      category: category,
-      itemURL: itemURL,
-      price: price,
-      shippingPrice: shippingPrice,
-      location: location,
-      isReturnAccepted: isReturnAccepted,
-      isTopRated: isTopRated,
-      isExpedited: isExpedited,
-      imageURL: imageURL,
-    });
-  }
-  return res;
-}
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "angular", "index.html"));
+});
 
 function constructURL(searchParams) {
   let url = `https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=YilangXu-CSCI571h-PRD-b2eb84a53-40467988&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=100`;
@@ -147,6 +99,60 @@ function constructURL(searchParams) {
   url += "&" + paramString;
   console.log(url);
   return url;
+}
+
+function extractNeededInfo(rawData) {
+  if (
+    rawData.findItemsAdvancedResponse === undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput === undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries ===
+      undefined ||
+    rawData.findItemsAdvancedResponse[0].paginationOutput[0].totalEntries[0] ===
+      "0"
+  ) {
+    console.dir(rawData);
+    console.log("No matches found!");
+    return [];
+  }
+  let items =
+    rawData["findItemsAdvancedResponse"][0]["searchResult"][0]["item"];
+  let res = [];
+  for (var item of items) {
+    try {
+      var title = item["title"][0];
+      var condition = item["condition"][0]["conditionDisplayName"][0];
+      var category = item["primaryCategory"][0]["categoryName"][0];
+      var itemURL = item["viewItemURL"][0];
+      var price =
+        item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
+      var shippingPrice =
+        item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"];
+      var location = item["location"][0];
+      var isReturnAccepted = item["returnsAccepted"][0] === "true";
+      var isTopRated = item["topRatedListing"][0] === "true";
+      var isExpedited =
+        item["shippingInfo"][0]["expeditedShipping"][0] === "true";
+      var imageURL = item["galleryURL"][0];
+    } catch (error) {
+      // console.dir(item)
+      // console.dir(error)
+      continue;
+    }
+    res.push({
+      title: title,
+      condition: condition,
+      category: category,
+      itemURL: itemURL,
+      price: price,
+      shippingPrice: shippingPrice,
+      location: location,
+      isReturnAccepted: isReturnAccepted,
+      isTopRated: isTopRated,
+      isExpedited: isExpedited,
+      imageURL: imageURL,
+    });
+  }
+  return res;
 }
 
 module.exports = app;
