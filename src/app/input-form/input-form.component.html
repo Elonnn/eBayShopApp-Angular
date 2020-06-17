@@ -46,33 +46,34 @@
   <div class="form-group row">
     <div class="col-sm-2 col-form-label">Condition</div>
     <div class="col-sm-10">
+      <!-- can be optimized as ngFor, with data stored in ts -->
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition" value="1000" ngModel />
+          <input type="checkbox" name="condition1000" ngModel />
           New
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="3000" ngModel />
+          <input type="checkbox" name="condition3000" ngModel />
           Used
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="4000" ngModel />
+          <input type="checkbox" name="condition4000" ngModel />
           Very Good
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="5000" ngModel />
+          <input type="checkbox" name="condition5000" ngModel />
           Good
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="condition[]" value="6000" ngModel />
+          <input type="checkbox" name="condition6000" ngModel />
           Acceptable
         </label>
       </div>
@@ -84,7 +85,7 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" id="returnAccepted" />
+          <input type="checkbox" name="returnAccepted" ngModel />
           Return Accepted
         </label>
       </div>
@@ -96,13 +97,13 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" id="shippingFree" />
+          <input type="checkbox" name="shippingFree" ngModel />
           Free
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" id="shippingExpedited" />
+          <input type="checkbox" name="shippingExpedited" ngModel />
           Expedited
         </label>
       </div>
@@ -112,7 +113,7 @@
   <div class="form-group row">
     <div class="col-sm-2 col-form-label">Sort order</div>
     <div class="col-sm-10">
-      <select class="custom-select" size="1" name="inSortBy" id="selectSortBy">
+      <select class="custom-select" size="1" name="inSortBy" id="selectSortBy" [(ngModel)]="selectedValue" >
         <option selected="selected" value="BestMatch">Best Match</option>
         <option value="CurrentPriceHighest">CurrentPriceHighest</option>
         <option value="PricePlusShippingHighest"
