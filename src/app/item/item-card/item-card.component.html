@@ -14,6 +14,63 @@
       <br />
       <i>{{ item.location }}</i>
       <button (click)="onShowDetails()">Show Details</button>
+      <mat-tab-group>
+        <mat-tab label="Basic Info">
+          <div class="row">
+            <b class="col-sm-3">Category Name</b>
+            <div class="col-sm-8">{{ item.category }}</div>
+          </div>
+
+          <div class="row">
+            <b class="col-sm-3">Condition</b>
+            <div class="col-sm-8">{{ item.condition }}</div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Shipping Info">
+          <div class="row">
+            <b class="col-sm-3">shippingType</b>
+            <div class="col-sm-8">{{ item.shippingType }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">shippingCost</b>
+            <div class="col-sm-8">{{ item.shippingCost }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">shipToLocations</b>
+            <div class="col-sm-8">{{ item.shipToLocations }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">Expedited Shipping</b>
+            <div class="col-sm-8">{{ item.isExpedited }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">oneDayShippingAvailable</b>
+            <div class="col-sm-8">{{ item.oneDayShippingAvailable }}</div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Listing Info">
+          <div class="row">
+            <b class="col-sm-3">bestOfferEnabled</b>
+            <div class="col-sm-8">{{ item.bestOfferEnabled }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">buyItNowAvailable</b>
+            <div class="col-sm-8">{{ item.buyItNowAvailable }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">listingType</b>
+            <div class="col-sm-8">{{ item.listingType }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">gift</b>
+            <div class="col-sm-8">{{ item.gift }}</div>
+          </div>
+          <div class="row">
+            <b class="col-sm-3">watchCount</b>
+            <div class="col-sm-8">{{ item.watchCount }}</div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

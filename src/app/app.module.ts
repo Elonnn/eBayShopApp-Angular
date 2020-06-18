@@ -10,8 +10,9 @@ import { InputFormComponent } from './input-form/input-form.component';
 
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [AppComponent, ItemCardComponent, InputFormComponent],
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http'
     BrowserAnimationsModule,
     FormsModule,
     NgxPaginationModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

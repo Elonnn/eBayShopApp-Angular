@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/", express.static(path.join(__dirname, "angular")));  // permit index.html to get js files
+app.use("/", express.static(path.join(__dirname, "angular"))); // permit index.html to get js files
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -120,19 +120,29 @@ function extractNeededInfo(rawData) {
   for (var item of items) {
     try {
       var title = item["title"][0];
-      var condition = item["condition"][0]["conditionDisplayName"][0];
-      var category = item["primaryCategory"][0]["categoryName"][0];
+      var imageURL = item["galleryURL"][0];
       var itemURL = item["viewItemURL"][0];
       var price =
         item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
-      var shippingPrice =
-        item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"];
       var location = item["location"][0];
-      var isReturnAccepted = item["returnsAccepted"][0] === "true";
-      var isTopRated = item["topRatedListing"][0] === "true";
+
+      var category = item["primaryCategory"][0]["categoryName"][0];
+      var condition = item["condition"][0]["conditionDisplayName"][0];
+
+      var shippingType = item["shippingInfo"][0]["shippingType"][0];
+      var shippingCost =
+        item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"];
+      var shipToLocations = item["shippingInfo"][0]["shipToLocations"][0];
       var isExpedited =
         item["shippingInfo"][0]["expeditedShipping"][0] === "true";
-      var imageURL = item["galleryURL"][0];
+      var oneDayShippingAvailable =
+        item["shippingInfo"][0]["oneDayShippingAvailable"][0];
+
+      var bestOfferEnabled = item["listingInfo"][0]["bestOfferEnabled"][0];
+      var buyItNowAvailable = item["listingInfo"][0]["buyItNowAvailable"][0];
+      var listingType = item["listingInfo"][0]["listingType"][0];
+      var gift = item["listingInfo"][0]["gift"][0];
+      var watchCount = item["listingInfo"][0]["watchCount"][0];
     } catch (error) {
       // console.dir(item)
       // console.dir(error)
@@ -140,16 +150,25 @@ function extractNeededInfo(rawData) {
     }
     res.push({
       title: title,
-      condition: condition,
-      category: category,
+      imageURL: imageURL,
       itemURL: itemURL,
       price: price,
-      shippingPrice: shippingPrice,
       location: location,
-      isReturnAccepted: isReturnAccepted,
-      isTopRated: isTopRated,
+
+      category: category,
+      condition: condition,
+
+      shippingType: shippingType,
+      shippingCost: shippingCost,
+      shipToLocations: shipToLocations,
       isExpedited: isExpedited,
-      imageURL: imageURL,
+      oneDayShippingAvailable: oneDayShippingAvailable,
+
+      bestOfferEnabled: bestOfferEnabled,
+      buyItNowAvailable: buyItNowAvailable,
+      listingType: listingType,
+      gift: gift,
+      watchCount: watchCount,
     });
   }
   return res;
