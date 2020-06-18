@@ -1,76 +1,89 @@
-<div *ngIf="displayedItems.length > 0">
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+<div class="container searchInfo" *ngIf="displayedItems.length > 0">
+  <h4 class="d-inline">Results for</h4>
+  <pagination-controls
+    (pageChange)="p = $event"
+    class="float-right"
+  ></pagination-controls>
   <div
-    class="greyCard"
+    class="card greyCard w-100 mx-auto my-3 p-4"
     *ngFor="
       let item of displayedItems
         | paginate: { itemsPerPage: 10, currentPage: p }
     "
   >
-    <img src="{{ item.imageURL }}" />
-    <div class="text">
-      <h3>{{ item.title }}</h3>
-      <b>Price:</b> ${{ item.price }}
-      <br />
-      <i>{{ item.location }}</i>
-      <button (click)="onShowDetails()">Show Details</button>
-      <mat-tab-group>
-        <mat-tab label="Basic Info">
-          <div class="row">
-            <b class="col-sm-3">Category Name</b>
-            <div class="col-sm-8">{{ item.category }}</div>
-          </div>
+    <div class="row no-gutters">
+      <div class="col-sm-3 d-flex flex-wrap align-items-center">
+        <img class="rounded mx-auto d-block" src="{{ item.imageURL }}" alt="" />
+      </div>
+      <div class="col">
+        <div class="card-block px-2">
+          <h4 class="card-title title">{{ item.title }}</h4>
+          <p class="card-text"><b>Price:</b> ${{ item.price }}</p>
+          <p class="card-text">
+            <i>{{ item.location }}</i>
+            <button class="btn btn-light mx-2" (click)="onShowDetails()">
+              Show Details
+            </button>
+          </p>
+          <mat-tab-group>
+            <mat-tab label="Basic Info">
+              <div class="row">
+                <b class="col-sm-3">Category Name</b>
+                <div class="col-sm-8">{{ item.category }}</div>
+              </div>
 
-          <div class="row">
-            <b class="col-sm-3">Condition</b>
-            <div class="col-sm-8">{{ item.condition }}</div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Shipping Info">
-          <div class="row">
-            <b class="col-sm-3">shippingType</b>
-            <div class="col-sm-8">{{ item.shippingType }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">shippingCost</b>
-            <div class="col-sm-8">{{ item.shippingCost }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">shipToLocations</b>
-            <div class="col-sm-8">{{ item.shipToLocations }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">Expedited Shipping</b>
-            <div class="col-sm-8">{{ item.isExpedited }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">oneDayShippingAvailable</b>
-            <div class="col-sm-8">{{ item.oneDayShippingAvailable }}</div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Listing Info">
-          <div class="row">
-            <b class="col-sm-3">bestOfferEnabled</b>
-            <div class="col-sm-8">{{ item.bestOfferEnabled }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">buyItNowAvailable</b>
-            <div class="col-sm-8">{{ item.buyItNowAvailable }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">listingType</b>
-            <div class="col-sm-8">{{ item.listingType }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">gift</b>
-            <div class="col-sm-8">{{ item.gift }}</div>
-          </div>
-          <div class="row">
-            <b class="col-sm-3">watchCount</b>
-            <div class="col-sm-8">{{ item.watchCount }}</div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+              <div class="row">
+                <b class="col-sm-3">Condition</b>
+                <div class="col-sm-8">{{ item.condition }}</div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Shipping Info">
+              <div class="row">
+                <b class="col-sm-3">shippingType</b>
+                <div class="col-sm-8">{{ item.shippingType }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">shippingCost</b>
+                <div class="col-sm-8">{{ item.shippingCost }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">shipToLocations</b>
+                <div class="col-sm-8">{{ item.shipToLocations }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">Expedited Shipping</b>
+                <div class="col-sm-8">{{ item.isExpedited }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">oneDayShippingAvailable</b>
+                <div class="col-sm-8">{{ item.oneDayShippingAvailable }}</div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Listing Info">
+              <div class="row">
+                <b class="col-sm-3">bestOfferEnabled</b>
+                <div class="col-sm-8">{{ item.bestOfferEnabled }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">buyItNowAvailable</b>
+                <div class="col-sm-8">{{ item.buyItNowAvailable }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">listingType</b>
+                <div class="col-sm-8">{{ item.listingType }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">gift</b>
+                <div class="col-sm-8">{{ item.gift }}</div>
+              </div>
+              <div class="row">
+                <b class="col-sm-3">watchCount</b>
+                <div class="col-sm-8">{{ item.watchCount }}</div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
     </div>
   </div>
 </div>
