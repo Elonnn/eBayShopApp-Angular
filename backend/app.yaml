@@ -11,20 +11,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python37
-handlers:
-- url: /
-  static_files: dist/fe/index.html
-  upload: dist/fe/index.html
-- url: /
-  static_dir: dist/fe
-
-skip_files:
-  - e2e/
-  - node_modules/
-  - src/
-  - ^(.*/)?\..*$
-  - ^(.*/)?.*\.json$
-  - ^(.*/)?.*\.md$
-  - ^(.*/)?.*\.yaml$
-  - ^LICENSE
+runtime: nodejs10
