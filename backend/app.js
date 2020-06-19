@@ -122,7 +122,7 @@ function extractNeededInfo(rawData) {
       var title = item["title"][0];
       var imageURL = item["galleryURL"][0];
       if (imageURL === undefined || imageURL === null || imageURL === 'https://thumbs1.ebaystatic.com/pict/04040_0.jpg') {
-        imageURL = 'https://csci571.com/hw/hw8/images/ebayDefault.png';
+        imageURL = 'https://elonnn.github.io/hw-assets/img/ebayDefault.png';
       }
       var itemURL = item["viewItemURL"][0];
       var price =
