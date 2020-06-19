@@ -23,8 +23,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api/search/:searchParams", (req, res, next) => {
-  let searchParams = JSON.parse(req.params.searchParams);
+app.get("/api/search", (req, res, next) => {
+  let searchParams = JSON.parse(req.query.params)
   console.log(searchParams);
 
   axios

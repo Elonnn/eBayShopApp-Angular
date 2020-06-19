@@ -4,3 +4,7 @@ form {
   margin: auto;
   font-weight: bold;
 }
+
+.redAsteroid {
+  color: red;
+}
