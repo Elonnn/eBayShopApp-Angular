@@ -11,22 +11,33 @@ import { Item } from '../item/item.model';
   styleUrls: ['./input-form.component.css'],
 })
 export class InputFormComponent implements OnInit {
-  submitted: boolean;
-  priceRangeValid: boolean;
-  noMatch: boolean;
+  submitted= false;
+  priceRangeValid=true;
+  noMatch=false;
   fetchedItems: Item[] = [];
   searchFilters = {
-    "keywords": null,
-    "sortOrder": null,
-    "MinPrice": null,
-    "MaxPrice": null,
+  "keywords": null,
+  "sortOrder": 'BestMatch',
+  "MinPrice": null,
+  "MaxPrice": null,
 
-    "ReturnsAcceptedOnly": false,
-    "FreeShippingOnly": false,
-    "shippingExpedited": false,
-    "condition": [],
-  }
+  "ReturnsAcceptedOnly": false,
+  "FreeShippingOnly": false,
+  "shippingExpedited": false,
+  "condition": [],
+};
   @Output() dataFetched = new EventEmitter<Item[]>();
+
+  // ngFor will loop in the alphabetic order
+  // one option is switch the value and key
+  // another option is to self-define a pipe named 'sortBy', then add | sortBy: 'x.value'
+  conditionInfo = {
+    1000: 'New',
+    3000: 'Used',
+    4000: 'Very Good',
+    5000: 'Good',
+    6000: 'Acceptable',
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -52,11 +63,11 @@ export class InputFormComponent implements OnInit {
     if (form.invalid) return;
 
     let condition = [];
-    if (form.value.condition1000) condition.push('1000');
-    if (form.value.condition3000) condition.push('3000');
-    if (form.value.condition4000) condition.push('4000');
-    if (form.value.condition5000) condition.push('5000');
-    if (form.value.condition6000) condition.push('6000');
+    for (var x of Object.keys(this.conditionInfo)) {
+      if (form.value['condition' + x]) {
+        condition.push(x);
+      }
+    }
     this.searchFilters["condition"] = condition;
 
     let params = JSON.stringify(this.searchFilters);
@@ -64,6 +75,8 @@ export class InputFormComponent implements OnInit {
     .subscribe((data) => {
       if (data.items.length === 0){
         this.noMatch = true;
+      } else {
+        this.noMatch = false;
       }
       this.fetchedItems = data.items;
       // emit an event with data as parameters
@@ -77,16 +90,14 @@ export class InputFormComponent implements OnInit {
     this.noMatch = false;
     this.fetchedItems = [];
     this.dataFetched.emit(this.fetchedItems);
-    this.searchFilters = {
-    "keywords": null,
-    "sortOrder": 'BestMatch',
-    "MinPrice": null,
-    "MaxPrice": null,
 
-    "ReturnsAcceptedOnly": false,
-    "FreeShippingOnly": false,
-    "shippingExpedited": false,
-    "condition": [],
-  }
+    this.searchFilters.keywords = null;
+    this.searchFilters.sortOrder = 'BestMatch';
+    this.searchFilters.MinPrice = null;
+    this.searchFilters.MaxPrice = null;
+    this.searchFilters.ReturnsAcceptedOnly = false;
+    this.searchFilters.FreeShippingOnly = false;
+    this.searchFilters.shippingExpedited = false;
+    this.searchFilters.condition = [];
   }
 }

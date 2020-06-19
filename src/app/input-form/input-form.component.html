@@ -46,35 +46,13 @@
   <div class="form-group row">
     <div class="col-sm-2 col-form-label">Condition</div>
     <div class="col-sm-10">
-      <!-- can be optimized as ngFor, with data stored in ts -->
-      <div class="form-check form-check-inline">
+      <div
+        class="form-check form-check-inline"
+        *ngFor="let x of conditionInfo | keyvalue"
+      >
         <label>
-          <input type="checkbox" name="condition1000" ngModel />
-          New
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label>
-          <input type="checkbox" name="condition3000" ngModel />
-          Used
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label>
-          <input type="checkbox" name="condition4000" ngModel />
-          Very Good
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label>
-          <input type="checkbox" name="condition5000" ngModel />
-          Good
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label>
-          <input type="checkbox" name="condition6000" ngModel />
-          Acceptable
+          <input type="checkbox" name='{{ "condition" + x.key }}' ngModel />
+          {{ x.value }}
         </label>
       </div>
     </div>
