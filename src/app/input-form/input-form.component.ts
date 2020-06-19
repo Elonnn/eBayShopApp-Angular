@@ -79,7 +79,7 @@ export class InputFormComponent implements OnInit {
     this.dataFetched.emit(this.fetchedItems);
     this.searchFilters = {
     "keywords": null,
-    "sortOrder": null,
+    "sortOrder": 'BestMatch',
     "MinPrice": null,
     "MaxPrice": null,
 
