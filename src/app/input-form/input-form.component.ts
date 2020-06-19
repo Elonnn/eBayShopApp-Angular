@@ -36,7 +36,6 @@ export class InputFormComponent implements OnInit {
 
   onSubmit(form: NgForm): void {
     this.submitted = true;
-    if (form.invalid) return;
 
     let MaxPrice = parseFloat(form.value.MaxPrice);
     let MinPrice = parseFloat(form.value.MinPrice);
@@ -50,6 +49,7 @@ export class InputFormComponent implements OnInit {
     } else {
       this.priceRangeValid = true;
     }
+    if (form.invalid) return;
 
     let condition = [];
     if (form.value.condition1000) condition.push('1000');

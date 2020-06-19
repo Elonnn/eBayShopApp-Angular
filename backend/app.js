@@ -121,6 +121,9 @@ function extractNeededInfo(rawData) {
     try {
       var title = item["title"][0];
       var imageURL = item["galleryURL"][0];
+      if (imageURL === undefined || imageURL === null || imageURL === 'https://thumbs1.ebaystatic.com/pict/04040_0.jpg') {
+        imageURL = 'https://csci571.com/hw/hw8/images/ebayDefault.png';
+      }
       var itemURL = item["viewItemURL"][0];
       var price =
         item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
@@ -136,12 +139,12 @@ function extractNeededInfo(rawData) {
       var isExpedited =
         item["shippingInfo"][0]["expeditedShipping"][0] === "true";
       var oneDayShippingAvailable =
-        item["shippingInfo"][0]["oneDayShippingAvailable"][0];
+        item["shippingInfo"][0]["oneDayShippingAvailable"][0] === "true";
 
-      var bestOfferEnabled = item["listingInfo"][0]["bestOfferEnabled"][0];
-      var buyItNowAvailable = item["listingInfo"][0]["buyItNowAvailable"][0];
+      var bestOfferEnabled = item["listingInfo"][0]["bestOfferEnabled"][0] === "true";
+      var buyItNowAvailable = item["listingInfo"][0]["buyItNowAvailable"][0] === "true";
       var listingType = item["listingInfo"][0]["listingType"][0];
-      var gift = item["listingInfo"][0]["gift"][0];
+      var gift = item["listingInfo"][0]["gift"][0] === "true";
       var watchCount = item["listingInfo"][0]["watchCount"][0];
     } catch (error) {
       // console.dir(item)

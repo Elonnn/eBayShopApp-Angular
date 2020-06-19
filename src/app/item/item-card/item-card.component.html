@@ -17,21 +17,25 @@
       </div>
       <div class="col">
         <div class="card-block px-2">
-          <h4 class="card-title title">{{ item.title }}</h4>
+          <a href="{{ item.itemURL }}"
+            ><h4 class="card-title title">{{ item.title }}</h4></a
+          >
           <p class="card-text"><b>Price:</b> ${{ item.price }}</p>
           <p class="card-text">
             <i>{{ item.location }}</i>
-            <button class="btn btn-light mx-2" (click)="onShowDetails()">
+            <button class="btn btn-light mx-2" (click)="item.inDetail = true;" *ngIf='!item.inDetail'>
               Show Details
             </button>
+            <button class="btn btn-light mx-2" (click)="item.inDetail = false;" *ngIf='item.inDetail'>
+              Hide Details
+            </button>
           </p>
-          <mat-tab-group>
+          <mat-tab-group *ngIf='item.inDetail'>
             <mat-tab label="Basic Info">
               <div class="row">
                 <b class="col-sm-3">Category Name</b>
-                <div class="col-sm-8">{{ item.category }}</div>
+                <div class="col-sm-6">{{ item.category }}</div>
               </div>
-
               <div class="row">
                 <b class="col-sm-3">Condition</b>
                 <div class="col-sm-8">{{ item.condition }}</div>
@@ -52,7 +56,9 @@
               </div>
               <div class="row">
                 <b class="col-sm-3">Expedited Shipping</b>
-                <div class="col-sm-8">{{ item.isExpedited }}</div>
+                <div class="col-sm-8">
+                  {{ item.isExpedited }}
+                </div>
               </div>
               <div class="row">
                 <b class="col-sm-3">oneDayShippingAvailable</b>
@@ -80,6 +86,8 @@
                 <b class="col-sm-3">watchCount</b>
                 <div class="col-sm-8">{{ item.watchCount }}</div>
               </div>
+
+              <span class="material-icons align-middle">clear</span>
             </mat-tab>
           </mat-tab-group>
         </div>

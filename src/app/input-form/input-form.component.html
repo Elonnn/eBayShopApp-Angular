@@ -85,7 +85,11 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="ReturnsAcceptedOnly" [(ngModel)]="searchFilters.ReturnsAcceptedOnly" />
+          <input
+            type="checkbox"
+            name="ReturnsAcceptedOnly"
+            [(ngModel)]="searchFilters.ReturnsAcceptedOnly"
+          />
           Return Accepted
         </label>
       </div>
@@ -97,13 +101,21 @@
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="FreeShippingOnly" [(ngModel)]="searchFilters.FreeShippingOnly" />
+          <input
+            type="checkbox"
+            name="FreeShippingOnly"
+            [(ngModel)]="searchFilters.FreeShippingOnly"
+          />
           Free
         </label>
       </div>
       <div class="form-check form-check-inline">
         <label>
-          <input type="checkbox" name="shippingExpedited" [(ngModel)]="searchFilters.shippingExpedited" />
+          <input
+            type="checkbox"
+            name="shippingExpedited"
+            [(ngModel)]="searchFilters.shippingExpedited"
+          />
           Expedited
         </label>
       </div>
@@ -113,7 +125,13 @@
   <div class="form-group row">
     <div class="col-sm-2 col-form-label">Sort order</div>
     <div class="col-sm-10">
-      <select class="custom-select" size="1" name="sortOrder" id="selectSortBy" [(ngModel)]="searchFilters.sortOrder" >
+      <select
+        class="custom-select"
+        size="1"
+        name="sortOrder"
+        id="selectSortBy"
+        [(ngModel)]="searchFilters.sortOrder"
+      >
         <option selected="selected" value="BestMatch">Best Match</option>
         <option value="CurrentPriceHighest">CurrentPriceHighest</option>
         <option value="PricePlusShippingHighest"
@@ -125,8 +143,12 @@
   </div>
 
   <div class="row justify-content-end mt-0 mb-5">
-    <button type="submit" class="btn btn-primary mx-1 mt-2">Search</button>
-    <button type="reset" class="btn btn-secondary mx-1 mt-2">Clear</button>
+    <button type="submit" class="btn btn-primary mx-1 mt-2">
+      <span class="material-icons align-middle">search</span>Search
+    </button>
+    <button type="reset" class="btn btn-secondary mx-1 mt-2">
+      <span class="material-icons align-middle">clear_all</span>Clear
+    </button>
   </div>
 
   <div
@@ -137,11 +159,19 @@
     Please enter a keyword
   </div>
 
-  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="!priceRangeValid">
+  <div
+    class="alert alert-warning text-center text-dark"
+    role="alert"
+    *ngIf="!priceRangeValid"
+  >
     Please use appropriate values for minPrice/maxPrice
   </div>
 
-  <div class="alert alert-warning text-center text-dark" role="alert" *ngIf="noMatch">
+  <div
+    class="alert alert-warning text-center text-dark"
+    role="alert"
+    *ngIf="noMatch"
+  >
     No exact matches found
   </div>
 </form>
