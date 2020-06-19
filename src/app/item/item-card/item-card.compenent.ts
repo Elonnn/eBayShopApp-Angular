@@ -10,7 +10,24 @@ export class ItemCardComponent {
   p: number = 1;
   @Input() displayedItems: Item[] = [];
 
-  onShowDetails() {
-    alert('details!');
-  }
+  basicInfo = {
+    'Category Name': 'category',
+    Condition: 'condition',
+  };
+
+  shippingInfo = {
+    'Shipping Type': 'shippingType',
+    'Shipping Cost': 'shippingCost',
+    'Ship To Locations': 'shipToLocations',
+    'Expedited Shipping': 'isExpedited',
+    'One Day Shipping Available': 'oneDayShippingAvailable',
+  };
+
+  listingInfo = {
+    'Best Offer Enabled': 'bestOfferEnabled',
+    'Buy It Now Available': 'buyItNowAvailable',
+    'Listing Type': 'listingType',
+    Gift: 'gift',
+    'Watch Count': 'watchCount',
+  };
 }

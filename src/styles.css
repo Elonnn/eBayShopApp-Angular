@@ -9,3 +9,6 @@ body {
   padding: 1rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.material-icons.red { color: red; }
+.material-icons.green { color: green; }
