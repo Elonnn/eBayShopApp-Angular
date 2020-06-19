@@ -1,14 +1,22 @@
 export interface Item {
   title: string,
-  condition: string,
-  category: string,
+  imageURL: string,
   itemURL: string,
   price: string,
-  shippingPrice: string,
   location: string,
-  imageURL: string,
 
-  isReturnAccepted: boolean,
-  isTopRated: boolean,
-  isExpedited: boolean
+  category: string,
+  condition: string,
+
+  shippingType: string,
+  shippingCost: string,
+  shipToLocations: string,
+  isExpedited: boolean,
+  oneDayShippingAvailable: boolean,
+
+  bestOfferEnabled: boolean,
+  buyItNowAvailable: boolean,
+  listingType: string,
+  gift: boolean,
+  watchCount: string
 }
