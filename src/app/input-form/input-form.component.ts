@@ -60,7 +60,7 @@ export class InputFormComponent implements OnInit {
     this.searchFilters["condition"] = condition;
 
     let params = JSON.stringify(this.searchFilters);
-    this.http.get<{items: Item[]}>('http://localhost:3000/api/search?params=' + params)
+    this.http.get<{items: Item[]}>('https://ebay-shopping-2.wl.r.appspot.com/api/search?params=' + params)
     .subscribe((data) => {
       if (data.items.length === 0){
         this.noMatch = true;
