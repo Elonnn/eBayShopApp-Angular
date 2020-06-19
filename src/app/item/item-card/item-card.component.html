@@ -1,5 +1,5 @@
-<div class="container searchInfo" *ngIf="displayedItems.length > 0">
-  <h4 class="d-inline">Results for</h4>
+<div class="container searchInfo" *ngIf="displayedItemsInfo.itemData.length > 0">
+  <h4 class="d-inline">Results for {{displayedItemsInfo.itemName}} </h4>
   <pagination-controls
     (pageChange)="p = $event"
     class="float-right"
@@ -8,7 +8,7 @@
   <div
     class="card greyCard w-100 mx-auto my-3"
     *ngFor="
-      let item of displayedItems
+      let item of displayedItemsInfo.itemData
         | paginate: { itemsPerPage: 5, currentPage: p }
     "
   >

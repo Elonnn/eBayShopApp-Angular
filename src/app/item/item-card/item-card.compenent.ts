@@ -8,7 +8,7 @@ import { Item } from '../item.model';
 })
 export class ItemCardComponent {
   p: number = 1;
-  @Input() displayedItems: Item[] = [];
+  @Input() displayedItemsInfo: {itemName: string, itemData: Item[]};
 
   basicInfo = {
     'Category Name': 'category',

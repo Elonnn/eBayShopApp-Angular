@@ -14,7 +14,6 @@ export class InputFormComponent implements OnInit {
   submitted= false;
   priceRangeValid=true;
   noMatch=false;
-  fetchedItems: Item[] = [];
   searchFilters = {
   "keywords": null,
   "sortOrder": 'BestMatch',
@@ -26,7 +25,7 @@ export class InputFormComponent implements OnInit {
   "shippingExpedited": false,
   "condition": [],
 };
-  @Output() dataFetched = new EventEmitter<Item[]>();
+  @Output() dataUpdated = new EventEmitter<{itemName: string, itemData: Item[]}>();
 
   // ngFor will loop in the alphabetic order
   // one option is switch the value and key
@@ -78,9 +77,8 @@ export class InputFormComponent implements OnInit {
       } else {
         this.noMatch = false;
       }
-      this.fetchedItems = data.items;
       // emit an event with data as parameters
-      this.dataFetched.emit(this.fetchedItems);
+      this.dataUpdated.emit({itemName: this.searchFilters.keywords, itemData: data.items});
     });
   }
 
@@ -88,8 +86,7 @@ export class InputFormComponent implements OnInit {
     this.submitted = false;
     this.priceRangeValid = true;
     this.noMatch = false;
-    this.fetchedItems = [];
-    this.dataFetched.emit(this.fetchedItems);
+    this.dataUpdated.emit({itemName: null, itemData: []});
 
     this.searchFilters.keywords = null;
     this.searchFilters.sortOrder = 'BestMatch';

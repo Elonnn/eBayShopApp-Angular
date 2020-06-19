@@ -9,8 +9,8 @@ import { Item } from './item/item.model';
 })
 export class AppComponent {
   title = 'shopApp';
-  items : Item[];
-  onDataFetched(items: Item[]) {
-    this.items = items;
+  itemsInfo : {itemName: string, itemData: Item[]};
+  onDataUpdated(itemsInfo: {itemName: string, itemData: Item[]}) {
+    this.itemsInfo = itemsInfo;
   }
 }
