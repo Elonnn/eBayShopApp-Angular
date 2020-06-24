@@ -28,7 +28,7 @@
         name="MinPrice"
         placeholder="Min price"
         min="0"
-        [(ngModel)]="searchFilters.MinPrice"
+        [(ngModel)]="searchFilters.min_price"
       />
     </div>
     <div class="col">
@@ -38,7 +38,7 @@
         name="MaxPrice"
         placeholder="Max price"
         min="0"
-        [(ngModel)]="searchFilters.MaxPrice"
+        [(ngModel)]="searchFilters.max_price"
       />
     </div>
   </div>
@@ -66,7 +66,7 @@
           <input
             type="checkbox"
             name="ReturnsAcceptedOnly"
-            [(ngModel)]="searchFilters.ReturnsAcceptedOnly"
+            [(ngModel)]="searchFilters.returns_accepted_only"
           />
           Return Accepted
         </label>
@@ -82,7 +82,7 @@
           <input
             type="checkbox"
             name="FreeShippingOnly"
-            [(ngModel)]="searchFilters.FreeShippingOnly"
+            [(ngModel)]="searchFilters.free_shipping_only"
           />
           Free
         </label>
@@ -92,7 +92,7 @@
           <input
             type="checkbox"
             name="shippingExpedited"
-            [(ngModel)]="searchFilters.shippingExpedited"
+            [(ngModel)]="searchFilters.shipping_expedited"
           />
           Expedited
         </label>
@@ -108,7 +108,7 @@
         size="1"
         name="sortOrder"
         id="selectSortBy"
-        [(ngModel)]="searchFilters.sortOrder"
+        [(ngModel)]="searchFilters.sort_order"
       >
         <option value="BestMatch">Best Match</option>
         <option value="CurrentPriceHighest">CurrentPriceHighest</option>

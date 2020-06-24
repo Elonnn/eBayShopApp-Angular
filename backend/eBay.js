@@ -3,39 +3,43 @@ module.exports = {
     let url = `https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=YilangXu-CSCI571h-PRD-b2eb84a53-40467988&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=100`;
     let eBayParams = {
       keywords: searchParams["keywords"],
-      sortOrder: searchParams["sortOrder"],
+      sortOrder: searchParams["sort_order"],
     };
 
     let filterNum = 0;
-    if (searchParams["MinPrice"] !== null) {
+    if (searchParams["min_price"] !== null) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MinPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
-        searchParams["MinPrice"];
+        searchParams["min_price"];
       eBayParams["itemFilter(" + filterNum.toString() + ").paramName"] =
         "Currency";
       eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
       filterNum += 1;
     }
-    if (searchParams["MaxPrice"] !== null) {
+    if (searchParams["max_price"] !== null) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MaxPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
-        searchParams["MaxPrice"];
+        searchParams["max_price"];
       eBayParams["itemFilter(" + filterNum.toString() + ").paramName"] =
         "Currency";
       eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
       filterNum += 1;
     }
-    eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
-      "ReturnsAcceptedOnly";
-    eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
-      searchParams["ReturnsAcceptedOnly"];
-    filterNum += 1;
-    eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
-      "FreeShippingOnly";
-    eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
-      searchParams["FreeShippingOnly"];
-    filterNum += 1;
-    if (searchParams["shippingExpedited"]) {
+    if (searchParams.returns_accepted_only !== null) {
+      eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
+        "ReturnsAcceptedOnly";
+      eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+        searchParams.returns_accepted_only;
+      filterNum += 1;
+    }
+    if (searchParams.free_shipping_only !== null) {
+      eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
+        "FreeShippingOnly";
+      eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
+        searchParams.free_shipping_only;
+      filterNum += 1;
+    }
+    if (searchParams["shipping_expedited"]) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
         "ExpeditedShippingType";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =

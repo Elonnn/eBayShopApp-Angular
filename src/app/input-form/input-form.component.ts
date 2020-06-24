@@ -16,13 +16,13 @@ export class InputFormComponent implements OnInit {
   noMatch = false;
   searchFilters = {
     keywords: null,
-    sortOrder: 'BestMatch',
-    MinPrice: null,
-    MaxPrice: null,
+    sort_order: 'BestMatch',
+    min_price: null,
+    max_price: null,
 
-    ReturnsAcceptedOnly: false,
-    FreeShippingOnly: false,
-    shippingExpedited: false,
+    returns_accepted_only: false,
+    free_shipping_only: false,
+    shipping_expedited: false,
     condition: [],
   };
 
@@ -99,12 +99,12 @@ export class InputFormComponent implements OnInit {
     this.itemInfoService.updateItemInfo(null, []);
 
     this.searchFilters.keywords = null;
-    this.searchFilters.sortOrder = 'BestMatch';
-    this.searchFilters.MinPrice = null;
-    this.searchFilters.MaxPrice = null;
-    this.searchFilters.ReturnsAcceptedOnly = false;
-    this.searchFilters.FreeShippingOnly = false;
-    this.searchFilters.shippingExpedited = false;
+    this.searchFilters.sort_order = 'BestMatch';
+    this.searchFilters.min_price = null;
+    this.searchFilters.max_price = null;
+    this.searchFilters.returns_accepted_only = false;
+    this.searchFilters.free_shipping_only = false;
+    this.searchFilters.shipping_expedited = false;
     this.searchFilters.condition = [];
   }
 }
