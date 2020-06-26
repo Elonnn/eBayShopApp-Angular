@@ -72,23 +72,22 @@ export class InputFormComponent implements OnInit {
     this.searchFilters['condition'] = condition;
 
     let params = JSON.stringify(this.searchFilters);
-    this.http
-      .get<{ items: Item[] }>(
-        'https://ebay-shopping-2.wl.r.appspot.com/api/search?params=' + params
-      )
-      .subscribe((data) => {
-        if (data.items.length === 0) {
-          this.noMatch = true;
-        } else {
-          this.noMatch = false;
-        }
-        // emit an event with data as parameters
-        // this.dataUpdated.emit({itemName: this.searchFilters.keywords, itemData: data.items});
-        this.itemInfoService.updateItemInfo(
-          this.searchFilters.keywords,
-          data.items
-        );
-      });
+    let url =
+      'https://ebay-shopping-2.wl.r.appspot.com/api/search?params=' + params;
+    console.log('sending request: ' + url);
+    this.http.get<{ items: Item[] }>(url).subscribe((data) => {
+      if (data.items.length === 0) {
+        this.noMatch = true;
+      } else {
+        this.noMatch = false;
+      }
+      // emit an event with data as parameters
+      // this.dataUpdated.emit({itemName: this.searchFilters.keywords, itemData: data.items});
+      this.itemInfoService.updateItemInfo(
+        this.searchFilters.keywords,
+        data.items
+      );
+    });
   }
 
   onReset(): void {

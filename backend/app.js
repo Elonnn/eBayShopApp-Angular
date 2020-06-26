@@ -31,7 +31,7 @@ app.get("/api/search", (req, res, next) => {
   axios
     .get(tools.constructURL(searchParams))
     .then((response) => {
-      res.status(200).json({ items: tools.extractNeededInfo(response.data) });
+      res.status(200).json({ items: tools.extractNeededInfo(response.data, searchParams['max_returned_item_num']) });
     })
     .catch((error) => {
       console.log(error);

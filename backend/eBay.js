@@ -1,13 +1,14 @@
 module.exports = {
   constructURL: function (searchParams) {
     let url = `https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=YilangXu-CSCI571h-PRD-b2eb84a53-40467988&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=100`;
+
     let eBayParams = {
       keywords: searchParams["keywords"],
       sortOrder: searchParams["sort_order"],
     };
 
     let filterNum = 0;
-    if (searchParams["min_price"] !== null) {
+    if (searchParams["min_price"] !== null && searchParams["min_price"] !== undefined) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MinPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams["min_price"];
@@ -16,7 +17,7 @@ module.exports = {
       eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
       filterNum += 1;
     }
-    if (searchParams["max_price"] !== null) {
+    if (searchParams["max_price"] !== null && searchParams["max_price"] !== undefined) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MaxPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams["max_price"];
@@ -25,21 +26,21 @@ module.exports = {
       eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
       filterNum += 1;
     }
-    if (searchParams.returns_accepted_only !== null) {
+    if (searchParams.returns_accepted_only === true) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
         "ReturnsAcceptedOnly";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams.returns_accepted_only;
       filterNum += 1;
     }
-    if (searchParams.free_shipping_only !== null) {
+    if (searchParams.free_shipping_only === true) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
         "FreeShippingOnly";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams.free_shipping_only;
       filterNum += 1;
     }
-    if (searchParams["shipping_expedited"]) {
+    if (searchParams["shipping_expedited"] === true) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] =
         "ExpeditedShippingType";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
@@ -47,7 +48,7 @@ module.exports = {
       filterNum += 1;
     }
     let condition = searchParams["condition"];
-    if (condition.length > 0) {
+    if (condition !== undefined && condition.length > 0) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "Condition";
       for (var i = 0; i < condition.length; i++) {
         v = condition[i];
@@ -63,7 +64,7 @@ module.exports = {
     return url;
   },
 
-  extractNeededInfo: function (rawData) {
+  extractNeededInfo: function (rawData, maxReturnedItemNum) {
     if (
       rawData.findItemsAdvancedResponse === undefined ||
       rawData.findItemsAdvancedResponse[0].paginationOutput === undefined ||
@@ -81,6 +82,7 @@ module.exports = {
     let res = [];
     for (var item of items) {
       try {
+        var productID = item["itemId"][0];
         var title = item["title"][0];
         var imageURL = item["galleryURL"][0];
         if (
@@ -120,6 +122,7 @@ module.exports = {
         continue;
       }
       res.push({
+        productID: productID,
         title: title,
         imageURL: imageURL,
         itemURL: itemURL,
@@ -141,6 +144,9 @@ module.exports = {
         gift: gift,
         watchCount: watchCount,
       });
+      if (maxReturnedItemNum !== undefined && res.length >= maxReturnedItemNum){
+        return res;
+      }
     }
     return res;
   },
