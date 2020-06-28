@@ -70,7 +70,7 @@ module.exports = {
     return url;
   },
 
-  extractNeededInfo: function (rawData, maxReturnedItemNum) {
+  extractItemsInfo: function (rawData, maxReturnedItemNum) {
     if (
       rawData.findItemsAdvancedResponse === undefined ||
       rawData.findItemsAdvancedResponse[0].paginationOutput === undefined ||
@@ -116,6 +116,12 @@ module.exports = {
         var oneDayShippingAvailable =
           item["shippingInfo"][0]["oneDayShippingAvailable"][0] === "true";
 
+        var shippingInfo = item["shippingInfo"][0];
+        delete shippingInfo["shippingServiceCost"];
+        for (var key of Object.keys(shippingInfo)) {
+          shippingInfo[key] = shippingInfo[key][0];
+        }
+
         var bestOfferEnabled =
           item["listingInfo"][0]["bestOfferEnabled"][0] === "true";
         var buyItNowAvailable =
@@ -145,6 +151,7 @@ module.exports = {
         shipToLocations: shipToLocations,
         isExpedited: isExpedited,
         oneDayShippingAvailable: oneDayShippingAvailable,
+        shippingInfo: shippingInfo,
 
         bestOfferEnabled: bestOfferEnabled,
         buyItNowAvailable: buyItNowAvailable,
@@ -159,6 +166,33 @@ module.exports = {
         return res;
       }
     }
+    return res;
+  },
+
+  extractItemInfo: function (rawData) {
+    let res = {};
+    if (!rawData.Item) {
+      console.dir(rawData)
+      return res;
+    }
+
+    res.pictureURLs = rawData.Item.PictureURL;
+    res.brand = null;
+    res.specifications = {};
+    let nameValueList = rawData.Item.ItemSpecifics.NameValueList;
+    if (nameValueList) {
+      for (var obj of nameValueList) {
+        if (obj.Name === "Brand") {
+          res.brand = obj.Value;
+        } else {
+          res.specifications[obj.Name] = obj.Value;
+        }
+      }
+    }
+    res.subtitle = rawData.Item.Subtitle;
+    res.sellerInfo = rawData.Item.Seller;
+    res.returnPolicies = rawData.Item.ReturnPolicy;
+
     return res;
   },
 };

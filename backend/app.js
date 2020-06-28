@@ -31,14 +31,29 @@ app.get("/api/search", (req, res, next) => {
   axios
     .get(tools.constructURL(searchParams))
     .then((response) => {
-      res
-        .status(200)
-        .json({
-          items: tools.extractNeededInfo(
-            response.data,
-            searchParams["max_returned_item_num"]
-          ),
-        });
+      res.status(200).json({
+        items: tools.extractItemsInfo(
+          response.data,
+          searchParams["max_returned_item_num"]
+        ),
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500);
+    });
+});
+
+app.get("/api/item", (req, res, next) => {
+  let itemID = req.query.id;
+  // DO NOT USE `` BECAUSE OF '\n'!
+  let url = 'https://open.api.ebay.com/shopping?callname=GetSingleItem&responseencoding=JSON' +
+    '&appid=YilangXu-CSCI571h-PRD-b2eb84a53-40467988&siteid=0&version=967' +
+    `&IncludeSelector=Description,Details,ItemSpecifics&ItemID=${itemID}`;
+  axios
+    .get(url)
+    .then((response) => {
+      res.status(200).json(tools.extractItemInfo(response.data));
     })
     .catch((error) => {
       console.log(error);
