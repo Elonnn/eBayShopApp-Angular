@@ -8,7 +8,10 @@ module.exports = {
     };
 
     let filterNum = 0;
-    if (searchParams["min_price"] !== null && searchParams["min_price"] !== undefined) {
+    if (
+      searchParams["min_price"] !== null &&
+      searchParams["min_price"] !== undefined
+    ) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MinPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams["min_price"];
@@ -17,7 +20,10 @@ module.exports = {
       eBayParams["itemFilter(" + filterNum.toString() + ").paramValue"] = "USD";
       filterNum += 1;
     }
-    if (searchParams["max_price"] !== null && searchParams["max_price"] !== undefined) {
+    if (
+      searchParams["max_price"] !== null &&
+      searchParams["max_price"] !== undefined
+    ) {
       eBayParams["itemFilter(" + filterNum.toString() + ").name"] = "MaxPrice";
       eBayParams["itemFilter(" + filterNum.toString() + ").value"] =
         searchParams["max_price"];
@@ -96,6 +102,7 @@ module.exports = {
         var price =
           item["sellingStatus"][0]["convertedCurrentPrice"][0]["__value__"];
         var location = item["location"][0];
+        var isTopRated = item["topRatedListing"][0] === "true";
 
         var category = item["primaryCategory"][0]["categoryName"][0];
         var condition = item["condition"][0]["conditionDisplayName"][0];
@@ -128,6 +135,7 @@ module.exports = {
         itemURL: itemURL,
         price: price,
         location: location,
+        isTopRated: isTopRated,
 
         category: category,
         condition: condition,
@@ -144,7 +152,10 @@ module.exports = {
         gift: gift,
         watchCount: watchCount,
       });
-      if (maxReturnedItemNum !== undefined && res.length >= maxReturnedItemNum){
+      if (
+        maxReturnedItemNum !== undefined &&
+        res.length >= maxReturnedItemNum
+      ) {
         return res;
       }
     }
